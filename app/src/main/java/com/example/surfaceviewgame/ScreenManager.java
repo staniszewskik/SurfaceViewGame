@@ -14,20 +14,19 @@ public class ScreenManager extends SurfaceView implements Runnable {
     private boolean runThread;
     private SurfaceHolder surfaceHolder = null;
 
-    public boolean gameOngoing;
     public boolean startGame;
-
-    public long timeLeft;
-    public int score;
-
+    public boolean endGame;
+    public boolean viewScores;
+    public boolean viewMenu;
     public boolean miniFinished;
 
-    public int totalScore;
-    public long totalTime;
-    public int totalMinis;
+    public int timeLeft;
+    public int score;
+    public int totalTime;
+    public int minis;
 
     public long lastUpdateTime;
-    public final long UPS = 60L;
+    public final int UPS = 60;
     public final long minUpdateInterval = 1000000000L / UPS;
     public long updateCount;
 
@@ -47,15 +46,13 @@ public class ScreenManager extends SurfaceView implements Runnable {
     }
 
     public void init(Context context) {
-        gameOngoing = false;
         startGame = false;
-        timeLeft = 60000000000L; // nanoseconds
-        score = 0;
+        endGame = false;
+        viewScores = false;
+        viewMenu = false;
         miniFinished = false;
 
-        totalScore = 0;
-        totalTime = 0;
-        totalMinis = 0;
+        initGame();
 
         if(surfaceHolder == null) {
             surfaceHolder = getHolder();
@@ -65,6 +62,13 @@ public class ScreenManager extends SurfaceView implements Runnable {
         rand = new Random();
         lastUpdateTime = System.nanoTime();
         updateCount = 0;
+    }
+
+    public void initGame() {
+        timeLeft = 60 * UPS; // updates
+        score = 0;
+        totalTime = 0;
+        minis = 0;
     }
 
     public void setScreen() {
@@ -98,10 +102,11 @@ public class ScreenManager extends SurfaceView implements Runnable {
                     e.printStackTrace();
                     thread.interrupt();
                 }
-            } else if(surfaceHolder.getSurface().isValid()) {
-                    Canvas canvas = surfaceHolder.lockCanvas();
-                    ma.curScreen.drawScreen(canvas);
-                    surfaceHolder.unlockCanvasAndPost(canvas);
+            }
+            else if(surfaceHolder.getSurface().isValid()) {
+                Canvas canvas = surfaceHolder.lockCanvas();
+                ma.curScreen.drawScreen(canvas);
+                surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
     }

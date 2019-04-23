@@ -11,6 +11,8 @@ public class MainActivity extends AppCompatActivity {
     private ScreenManager screenManager;
     private ConstraintLayout mainLayout;
 
+    private final int MINI_COUNT = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         screenManager = new ScreenManager(this);
-        curScreen = new TestScreen(screenManager);
+        curScreen = new MainMenu(screenManager);
         screenManager.init(this);
         screenManager.setScreen();
         mainLayout = (ConstraintLayout)findViewById(R.id.main_layout);
@@ -82,18 +84,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchScreen() {
-        if(screenManager.startGame) {
+        if(screenManager.miniFinished) {
+            screenManager.miniFinished = false;
+            screenManager.minis++;
+            changeToScreen(getRandomMini());
+        }
+        else if(screenManager.startGame) {
             screenManager.startGame = false;
+            screenManager.initGame();
+            changeToScreen(getRandomMini());
+        }
+        else if(screenManager.endGame) {
+            screenManager.endGame = false;
+            changeToScreen(new EndScreen(screenManager));
+        }
+        else if(screenManager.viewScores) {
+            screenManager.viewScores = false;
             //
         }
-        else if(screenManager.miniFinished) {
-            screenManager.miniFinished = false;
-            TestScreen temp = new TestScreen(screenManager);
-            screenManager.pauseScreen();
-            curScreen = temp;
-            screenManager.updateCount = 0;
-            screenManager.setScreen();
-            screenManager.resumeScreen();
+        else if(screenManager.viewMenu) {
+            screenManager.viewMenu = false;
+            changeToScreen(new MainMenu(screenManager));
+        }
+    }
+
+    private void changeToScreen(BaseScreen screen) {
+        screenManager.pauseScreen();
+        curScreen = screen;
+        screenManager.updateCount = 0;
+        screenManager.setScreen();
+        screenManager.resumeScreen();
+    }
+
+    private BaseScreen getRandomMini() {
+        // change this to use N-bag randomization to avoid repetition (like in Tetris)
+        int nextMini = screenManager.rand.nextInt(MINI_COUNT) + 1;
+        switch (nextMini) {
+            case 1:
+                return new TestScreen(screenManager);
+            case 2:
+                return new Mini2(screenManager);
+            default:
+                return null;
         }
     }
 }

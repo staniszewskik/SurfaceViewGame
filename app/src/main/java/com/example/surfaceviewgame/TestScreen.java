@@ -19,8 +19,6 @@ public class TestScreen extends BaseScreen {
 
     @Override
     public void drawScreen(Canvas canvas) {
-        // maybe drawBackground(canvas)? score + timeLeft
-
         Paint test = new Paint();
         test.setColor(Color.argb(255, 20, 120, 60));
         test.setTextSize(sm.getHeight() * 0.1f);
