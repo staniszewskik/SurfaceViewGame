@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout mainLayout;
 
     private final int MINI_COUNT = 2;
+    private int bagIndex = MINI_COUNT;
+    private int[] bag = new int[MINI_COUNT];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         screenManager = new ScreenManager(this);
         curScreen = new MainMenu(screenManager);
-        screenManager.init(this);
+        screenManager.init();
         screenManager.setScreen();
         mainLayout = (ConstraintLayout)findViewById(R.id.main_layout);
         mainLayout.addView(screenManager);
+
+        for(int i = 0; i < MINI_COUNT; i++)
+            bag[i] = i + 1;
     }
 
     @Override
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(screenManager.endGame) {
             screenManager.endGame = false;
+            screenManager.miniFinished = false;
             changeToScreen(new EndScreen(screenManager));
         }
         else if(screenManager.viewScores) {
@@ -117,11 +123,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private BaseScreen getRandomMini() {
-        // change this to use N-bag randomization to avoid repetition (like in Tetris)
-        int nextMini = screenManager.rand.nextInt(MINI_COUNT) + 1;
+        if(bagIndex == MINI_COUNT) {
+            for(int i = 0; i < MINI_COUNT; i++) {
+                int shuffleIndex = screenManager.rand.nextInt(MINI_COUNT);
+                int temp = bag[i];
+                bag[i] = bag[shuffleIndex];
+                bag[shuffleIndex] = temp;
+            }
+            bagIndex = 0;
+        }
+
+        int nextMini = bag[bagIndex++];
         switch (nextMini) {
             case 1:
-                return new TestScreen(screenManager);
+                return new Mini1(screenManager);
             case 2:
                 return new Mini2(screenManager);
             default:

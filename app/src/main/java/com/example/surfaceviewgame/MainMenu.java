@@ -1,8 +1,11 @@
 package com.example.surfaceviewgame;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -13,6 +16,9 @@ public class MainMenu extends BaseScreen {
     private BtnRect scoresBtn = new BtnRect();
 
     private boolean finishedLayout;
+
+    private Bitmap mml;
+    private Rect mmlRect;
 
     public MainMenu(ScreenManager sm) {
         super(sm);
@@ -26,7 +32,7 @@ public class MainMenu extends BaseScreen {
     @Override
     public void drawScreen(Canvas canvas) {
         Paint backPaint = new Paint();
-        backPaint.setColor(Color.rgb(255, 187, 102));
+        backPaint.setColor(Color.rgb(0, 0, 80));
         canvas.drawRect(0, 0, sm.getWidth(), sm.getHeight(), backPaint);
 
         playBtn.draw(canvas);
@@ -38,6 +44,8 @@ public class MainMenu extends BaseScreen {
 
         canvas.drawText("PLAY", playBtn.lft, playBtn.btm, textPaint);
         canvas.drawText("SCORES", scoresBtn.lft, scoresBtn.btm, textPaint);
+
+        canvas.drawBitmap(mml, null, mmlRect, null);
     }
 
     @Override
@@ -62,6 +70,11 @@ public class MainMenu extends BaseScreen {
             playBtn.btm = (int)(0.4f * sm.getHeight());
             scoresBtn.top = (int)(0.6f * sm.getHeight());
             scoresBtn.btm = (int)(0.8f * sm.getHeight());
+
+            mml = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.main_menu_logo);
+            int h = sm.getHeight();
+            int offset = (int)(0.05f * h);
+            mmlRect = new Rect(offset, offset, h - offset, h - offset);
         }
     }
 

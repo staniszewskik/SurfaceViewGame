@@ -35,17 +35,20 @@ public class ScreenManager extends SurfaceView implements Runnable {
 
     public ScreenManager(Context context) {
         super(context);
+        ma = (MainActivity)context;
     }
 
     public ScreenManager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        ma = (MainActivity)context;
     }
 
     public ScreenManager(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        ma = (MainActivity)context;
     }
 
-    public void init(Context context) {
+    public void init() {
         startGame = false;
         endGame = false;
         viewScores = false;
@@ -58,7 +61,6 @@ public class ScreenManager extends SurfaceView implements Runnable {
             surfaceHolder = getHolder();
         }
 
-        ma = (MainActivity)context;
         rand = new Random();
         lastUpdateTime = System.nanoTime();
         updateCount = 0;

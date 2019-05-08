@@ -47,7 +47,7 @@ public class EndScreen extends BaseScreen {
     @Override
     public void drawScreen(Canvas canvas) {
         Paint backPaint = new Paint();
-        backPaint.setColor(Color.rgb(255, 187, 102));
+        backPaint.setColor(Color.rgb(0, 0, 80));
         canvas.drawRect(0, 0, sm.getWidth(), sm.getHeight(), backPaint);
 
         tag1UpBtn.draw(canvas);
@@ -59,19 +59,20 @@ public class EndScreen extends BaseScreen {
         okayBtn.draw(canvas);
 
         Paint textPaint = new Paint();
-        textPaint.setColor(Color.rgb(60, 60, 60));
+        textPaint.setColor(Color.rgb(120, 120, 120));
         textPaint.setTextSize(sm.getHeight() * 0.1f);
 
-        float tagY = 0.21f * sm.getHeight() + tag1UpBtn.top;
-        canvas.drawText(Character.toString(tag1), tag1UpBtn.lft, tagY, textPaint);
-        canvas.drawText(Character.toString(tag2), tag2UpBtn.lft, tagY, textPaint);
-        canvas.drawText(Character.toString(tag3), tag3UpBtn.lft, tagY, textPaint);
+        float tagOffsetX = 0.3f * (tag1UpBtn.rgt - tag1UpBtn.lft);
+        float tagY = 0.195f * sm.getHeight() + tag1UpBtn.top;
+        canvas.drawText(Character.toString(tag1), tag1UpBtn.lft + tagOffsetX, tagY, textPaint);
+        canvas.drawText(Character.toString(tag2), tag2UpBtn.lft + tagOffsetX, tagY, textPaint);
+        canvas.drawText(Character.toString(tag3), tag3UpBtn.lft + tagOffsetX, tagY, textPaint);
 
         int totalSeconds = sm.totalTime / sm.UPS;
 
         canvas.drawText("SCORE: " + sm.score, 0.1f * sm.getWidth(), 0.2f * sm.getHeight(), textPaint);
-        canvas.drawText("TIME: " + totalSeconds, 0.5f * sm.getWidth(), 0.2f * sm.getHeight(), textPaint);
-        canvas.drawText("MINIS: " + sm.minis, 0.5f * sm.getWidth(), 0.4f * sm.getHeight(), textPaint);
+        canvas.drawText("TIME: " + totalSeconds, 0.6f * sm.getWidth(), 0.2f * sm.getHeight(), textPaint);
+        canvas.drawText("MINIS: " + sm.minis, 0.6f * sm.getWidth(), 0.4f * sm.getHeight(), textPaint);
     }
 
     @Override

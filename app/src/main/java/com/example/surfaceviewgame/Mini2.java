@@ -15,7 +15,7 @@ public class Mini2 extends BaseScreen {
     private int h;
 
     private final int KIND_COUNT = 50;
-    private final int POINT_VALUE = 50;
+    private final int POINT_VALUE = 200;
     private List<Point> points;
     private float r;
 
@@ -43,13 +43,19 @@ public class Mini2 extends BaseScreen {
         edgeThickness = r / 4;
         twoPointers = false;
 
+        // doesn't put points right on the screen edge to make selecting them easier
+        int widthRange = w - (int)(4 * r);
+        int widthStart = (w - widthRange) / 2;
+        int heightRange = h - (int)(4 * r);
+        int heightStart = (h - heightRange) / 2;
+
         points = new ArrayList<Point>();
         for(int i = 0; i < KIND_COUNT; i++)
-            points.add(new Point(sm.rand.nextInt(w), sm.rand.nextInt(h), 0));
+            points.add(new Point(widthStart + sm.rand.nextInt(widthRange), heightStart + sm.rand.nextInt(heightRange), 0));
         for(int i = 0; i < KIND_COUNT; i++)
-            points.add(new Point(sm.rand.nextInt(w), sm.rand.nextInt(h), 1));
+            points.add(new Point(widthStart + sm.rand.nextInt(widthRange), heightStart + sm.rand.nextInt(heightRange), 1));
         for(int i = 0; i < 5; i++)
-            points.add(new Point(sm.rand.nextInt(w), sm.rand.nextInt(h), 2));
+            points.add(new Point(widthStart + sm.rand.nextInt(widthRange), heightStart + sm.rand.nextInt(heightRange), 2));
 
         redPaint.setColor(Color.RED);
         grnPaint.setColor(Color.GREEN);
@@ -142,9 +148,8 @@ public class Mini2 extends BaseScreen {
             twoPointers = false;
             finishSel();
 
-            if(selections == 5) {
+            if(selections == 5)
                 sm.miniFinished = true;
-            }
         }
 
         return true;
@@ -161,7 +166,7 @@ public class Mini2 extends BaseScreen {
                         sm.score += POINT_VALUE;
                         break;
                     case 1:
-                        sm.score -= POINT_VALUE;
+                        sm.score -= 2 * POINT_VALUE; // selecting the entire screen will give you 5 seconds, but lose a lot of points
                         if(sm.score < 0)
                             sm.score = 0;
                         break;
