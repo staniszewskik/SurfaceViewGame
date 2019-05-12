@@ -3,6 +3,7 @@ package com.example.surfaceviewgame;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         screenManager = new ScreenManager(this);
+        screenManager.miniCount = MINI_COUNT;
         curScreen = new MainMenu(screenManager);
         screenManager.init();
         screenManager.setScreen();
@@ -92,25 +94,40 @@ public class MainActivity extends AppCompatActivity {
         if(screenManager.miniFinished) {
             screenManager.miniFinished = false;
             screenManager.minis++;
+
+            if(screenManager.minis == MINI_COUNT)
+                screenManager.simpleHowTo = false;
+
             changeToScreen(getRandomMini());
+        }
+        else if(screenManager.simpleHowToFinished) {
+            screenManager.simpleHowToFinished = false;
+            changeToScreen(getSpecificMini(screenManager.viewingHowToFor));
         }
         else if(screenManager.startGame) {
             screenManager.startGame = false;
+            screenManager.simpleHowTo = true;
             screenManager.initGame();
             changeToScreen(getRandomMini());
         }
         else if(screenManager.endGame) {
             screenManager.endGame = false;
-            screenManager.miniFinished = false;
+            screenManager.simpleHowTo = false;
+            bagIndex = MINI_COUNT; // need a fresh bag for repeat games
             changeToScreen(new EndScreen(screenManager));
         }
         else if(screenManager.viewScores) {
             screenManager.viewScores = false;
-            //
+            changeToScreen(new ScoresScreen(screenManager));
         }
         else if(screenManager.viewMenu) {
             screenManager.viewMenu = false;
             changeToScreen(new MainMenu(screenManager));
+        }
+        else if(screenManager.viewHowTo) {
+            screenManager.viewHowTo = false;
+            screenManager.viewingHowToFor = 1;
+            changeToScreen(new HowToScreen(screenManager));
         }
     }
 
@@ -134,7 +151,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int nextMini = bag[bagIndex++];
-        switch (nextMini) {
+        if(screenManager.simpleHowTo) {
+            screenManager.viewingHowToFor = nextMini;
+            return new HowToScreen(screenManager);
+        }
+        else
+            return getSpecificMini(nextMini);
+    }
+
+    private BaseScreen getSpecificMini(int miniIndex) {
+        switch (miniIndex) {
             case 1:
                 return new Mini1(screenManager);
             case 2:

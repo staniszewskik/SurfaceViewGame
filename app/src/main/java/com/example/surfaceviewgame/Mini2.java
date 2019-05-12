@@ -34,6 +34,10 @@ public class Mini2 extends BaseScreen {
     private float xTime;
     private float yScore;
 
+    // switching screens might take long enough that another update creates another Runnable,
+    // which leads to skipping minis and/or howtos and wrong scores
+    private boolean noMoreUpdates = false;
+
     public Mini2(ScreenManager sm) {
         super(sm);
 
@@ -107,17 +111,21 @@ public class Mini2 extends BaseScreen {
 
     @Override
     public void updateScreen() {
+        if(noMoreUpdates)
+            return;
         sm.timeLeft--;
         sm.totalTime++;
         if(sm.timeLeft == 0)
             sm.endGame = true;
         if(sm.endGame || sm.miniFinished) {
+            noMoreUpdates = true;
             sm.ma.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     sm.ma.switchScreen();
                 }
             });
+            return;
         }
 
         xTime = ((float)sm.timeLeft / (60f * sm.UPS)) * sm.getWidth();

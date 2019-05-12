@@ -19,6 +19,12 @@ public class ScreenManager extends SurfaceView implements Runnable {
     public boolean viewScores;
     public boolean viewMenu;
     public boolean miniFinished;
+    public boolean viewHowTo;
+
+    public boolean simpleHowTo;
+    public int miniCount;
+    public int viewingHowToFor;
+    public boolean simpleHowToFinished;
 
     public int timeLeft;
     public int score;
@@ -54,6 +60,11 @@ public class ScreenManager extends SurfaceView implements Runnable {
         viewScores = false;
         viewMenu = false;
         miniFinished = false;
+        viewHowTo = false;
+
+        simpleHowTo = false;
+        viewingHowToFor = 0;
+        simpleHowToFinished = false;
 
         initGame();
 
