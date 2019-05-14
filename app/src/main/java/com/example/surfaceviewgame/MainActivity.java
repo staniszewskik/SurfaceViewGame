@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private ScreenManager screenManager;
     private ConstraintLayout mainLayout;
 
-    private final int MINI_COUNT = 2;
+    private final int MINI_COUNT = 3;
     private int bagIndex = MINI_COUNT;
     private int[] bag = new int[MINI_COUNT];
 
@@ -165,6 +165,8 @@ public class MainActivity extends AppCompatActivity {
                 return new Mini1(screenManager);
             case 2:
                 return new Mini2(screenManager);
+            case 3:
+                return new MiniK1(screenManager);
             default:
                 return null;
         }

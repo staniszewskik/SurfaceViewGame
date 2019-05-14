@@ -118,6 +118,9 @@ public class HowToScreen extends BaseScreen {
             case 2:
                 howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.test_mini2_how_to);
                 break;
+            case 3:
+                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.test_minik1_how_to);
+                break;
             default:
                 howToImage = null;
                 break;
