@@ -1,11 +1,20 @@
 package com.example.surfaceviewgame;
 
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     public BaseScreen curScreen;
@@ -15,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private final int MINI_COUNT = 3;
     private int bagIndex = MINI_COUNT;
     private int[] bag = new int[MINI_COUNT];
+
+    public UUID playerUUID;
+    public DatabaseReference rootRef;
+    public DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i = 0; i < MINI_COUNT; i++)
             bag[i] = i + 1;
+
+        setPlayerUUID();
+        rootRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -170,5 +186,18 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return null;
         }
+    }
+
+    private void setPlayerUUID() {
+        SharedPreferences sp = this.getSharedPreferences("playerPreferences", MODE_PRIVATE);
+
+        if(!sp.contains("playerUUID")) {
+            playerUUID = UUID.randomUUID();
+            SharedPreferences.Editor ed = sp.edit();
+            ed.putString("playerUUID", playerUUID.toString());
+            ed.apply();
+        }
+        else
+            playerUUID = UUID.fromString(sp.getString("playerUUID", ""));
     }
 }

@@ -121,10 +121,10 @@ public class MiniK1 extends BaseScreen {
 
     @Override
     public void updateScreen() {
-        if(cardCount>=10)
-            sm.miniFinished=true;
         if(noMoreUpdates)
             return;
+        if(cardCount>=10)
+            sm.miniFinished=true;
         sm.timeLeft--;
         sm.totalTime++;
         if(sm.timeLeft <= 0)

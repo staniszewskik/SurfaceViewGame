@@ -66,8 +66,8 @@ public class MainMenu extends BaseScreen {
             finishedLayout = true;
 
             float buttonAspectRatio = ((float)playBtn.bmp.getHeight()) / playBtn.bmp.getWidth();
-            playBtn.lft = (int)(0.65f * sm.getWidth());
-            playBtn.rgt = (int)(0.85f * sm.getWidth());
+            playBtn.lft = (int)(0.66f * sm.getWidth());
+            playBtn.rgt = (int)(0.86f * sm.getWidth());
             float buttonHeight = buttonAspectRatio * (playBtn.rgt - playBtn.lft);
             float buttonVertOffset = (sm.getHeight() - 3f * buttonHeight) / 4f;
             playBtn.top = (int)buttonVertOffset;

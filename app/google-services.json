@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "741563326724",
+    "firebase_url": "https://surfaceviewgame.firebaseio.com",
+    "project_id": "surfaceviewgame",
+    "storage_bucket": "surfaceviewgame.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741563326724:android:d8d70a3d91753897",
+        "android_client_info": {
+          "package_name": "com.example.surfaceviewgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741563326724-fkh2hp770psm6tqbvtnqktliicknciib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKJFQ1OmhkLIZrKKoejIPQV9UxQheuJnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741563326724-fkh2hp770psm6tqbvtnqktliicknciib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
