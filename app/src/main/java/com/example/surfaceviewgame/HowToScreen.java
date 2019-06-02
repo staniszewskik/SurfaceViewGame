@@ -113,13 +113,13 @@ public class HowToScreen extends BaseScreen {
     private void switchHowToImage() {
         switch (sm.viewingHowToFor) {
             case 1:
-                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.test_mini1_how_to);
+                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.mini1_how_to);
                 break;
             case 2:
-                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.test_mini2_how_to);
+                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.mini2_how_to);
                 break;
             case 3:
-                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.test_minik1_how_to);
+                howToImage = BitmapFactory.decodeResource(sm.ma.getResources(), R.drawable.minik1_how_to);
                 break;
             default:
                 howToImage = null;
